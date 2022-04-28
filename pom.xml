@@ -256,6 +256,9 @@
           <version>${plugin.version.failsafe}</version>
           <configuration>
             <groups>integration</groups>
+            <systemPropertyVariables>
+              <version.zeebe>${version.zeebe}</version.zeebe>
+            </systemPropertyVariables>
           </configuration>
           <executions>
             <execution>
