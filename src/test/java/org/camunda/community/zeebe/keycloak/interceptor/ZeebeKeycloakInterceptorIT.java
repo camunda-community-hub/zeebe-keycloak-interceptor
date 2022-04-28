@@ -14,13 +14,16 @@ import io.zeebe.containers.cluster.ZeebeCluster;
 import io.zeebe.containers.cluster.ZeebeClusterBuilder;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -66,7 +69,7 @@ class ZeebeKeycloakInterceptorIT {
     innerConfiguration.setAllowedIssuers(List.of(authServerUrl));
     final Path configFilePath = Files.createFile(tempDir.resolve("zeebe-keycloak-config.json"));
     OBJECT_MAPPER.writeValue(configFilePath.toFile(), configuration);
-    final String zeebeVersion = "1.2.12";
+    final String zeebeVersion = getZeebeVersion();
     ZeebeClusterBuilder builder =
         ZeebeCluster.builder()
             .withEmbeddedGateway(false)
@@ -89,7 +92,7 @@ class ZeebeKeycloakInterceptorIT {
                                           .usePlaintext()))
                       .withStartupTimeout(Duration.ofMinutes(5))
                       .withFileSystemBind(
-                          "target/zeebe-keycloak-interceptor-0.0.1-SNAPSHOT-jar-with-dependencies.jar",
+                          getJarWithDependenciesPath(),
                           keyCloakInterceptorJarPath,
                           BindMode.READ_ONLY)
                       .withFileSystemBind(
@@ -120,9 +123,31 @@ class ZeebeKeycloakInterceptorIT {
                 .requestTimeout(Duration.ofSeconds(5))
                 .send()
                 .join(5, TimeUnit.SECONDS);
-        assertThat(topology.getGatewayVersion()).isEqualTo(zeebeVersion);
+        assertThat(topology.getClusterSize()).isEqualTo(1);
       }
       assertThat(zeebeCluster).isNotNull();
+    }
+  }
+
+  @NotNull
+  private String getZeebeVersion() {
+    return System.getProperty("version.zeebe", "latest");
+  }
+
+  @NotNull
+  private String getJarWithDependenciesPath() {
+    final PathMatcher matcher =
+        FileSystems.getDefault()
+            .getPathMatcher("glob:**zeebe-keycloak-interceptor-*-jar-with-dependencies.jar");
+    final Path targetDir = Path.of("target/");
+    try (final Stream<Path> fileInTargetDirStream = Files.list(targetDir)) {
+      return fileInTargetDirStream
+          .filter(matcher::matches)
+          .findFirst()
+          .map(path -> path.toAbsolutePath().toString())
+          .orElseThrow();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
