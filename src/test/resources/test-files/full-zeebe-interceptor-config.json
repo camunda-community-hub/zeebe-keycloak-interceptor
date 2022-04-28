@@ -1,0 +1,16 @@
+{
+  "zeebeKeycloak": {
+    "serverUrl": "http://localhost",
+    "realm": "test-realm",
+    "grantType": "client_credentials",
+    "clientId": "test-client-id",
+    "clientSecret": "test-client-secret",
+    "username": "test-username",
+    "password": "test-password",
+    "expectedAudience": "test-expected-audience",
+    "expectedIssuedFor": "test-expected-issued-for",
+    "allowedIssuers": [],
+    "minTimeBetweenJwksRequests": "12 s",
+    "publicKeyCacheTtl": "12 d"
+  }
+}

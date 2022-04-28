@@ -1,0 +1,15 @@
+{
+  "zeebeKeycloak": {
+    "realm": "test",
+    "grantType" :"client_credentials",
+    "clientId":"test-service",
+    "clientSecret":"pxInf8INhK1bKHhPqDRnvPAnY59ol2YC",
+    "username":"",
+    "password":"",
+    "expectedAudience": "",
+    "expectedIssuedFor": "",
+    "allowedIssuers": [],
+    "minTimeBetweenJwksRequests": "10 s",
+    "publicKeyCacheTtl": "1 d"
+  }
+}
