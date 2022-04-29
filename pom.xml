@@ -93,6 +93,14 @@
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-processor</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-annotations</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
