@@ -58,13 +58,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.camunda</groupId>
-        <artifactId>zeebe-parent</artifactId>
-        <version>${version.zeebe}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>com.avast.grpc.jwt</groupId>
         <artifactId>grpc-java-jwt-keycloak</artifactId>
         <version>${version.grpc-java-jwt}</version>
@@ -101,6 +94,13 @@
             <artifactId>org.osgi.core</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>io.camunda</groupId>
+        <artifactId>zeebe-parent</artifactId>
+        <version>${version.zeebe}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.junit</groupId>
