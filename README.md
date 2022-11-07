@@ -3,7 +3,14 @@
 
 # Zeebe Keycloak Interceptor
 
-This project's purpose is to enable authentication on Zeebe Gateways.
+This project provides a [Zeebe Gateway interceptor](https://docs.camunda.io/docs/self-managed/zeebe-deployment/interceptors/), which secures the Zeebe Gateway with a JWT-based (e.g. oAUth) authentication against [Keycloak](https://www.keycloak.org/).
+
+## Implementation
+The implementation is a wrapper relying on https://github.com/avast/grpc-java-jwt. It handles configuration,
+then delegates to [KeycloakJwtServerInterceptor](https://github.com/avast/grpc-java-jwt/blob/main/keycloak/src/main/java/com/avast/grpc/jwt/keycloak/server/KeycloakJwtServerInterceptor.java),
+a Keycloak specific implementation of [JwtServerInterceptor](https://github.com/avast/grpc-java-jwt/blob/main/core/src/main/java/com/avast/grpc/jwt/server/JwtServerInterceptor.java).
+This interceptor uses a [KeycloakJwtTokenParser](https://github.com/avast/grpc-java-jwt/blob/main/keycloak/src/main/java/com/avast/grpc/jwt/keycloak/server/KeycloakJwtTokenParser.java),
+in which the [Keycloak API](https://www.keycloak.org/docs-api/20.0.0/javadocs/index.html) is used to validate the tokens.
 
 ## Usage
 
