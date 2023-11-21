@@ -51,7 +51,7 @@
     <plugin.version.jacoco>0.8.8</plugin.version.jacoco>
     <plugin.version.fmt>2.13</plugin.version.fmt>
     <plugin.version.assembly>3.3.0</plugin.version.assembly>
-    <version.keycloak>18.0.0</version.keycloak>
+    <version.keycloak>18.0.2</version.keycloak>
     <plugin.version.failsafe>3.0.0-M6</plugin.version.failsafe>
   </properties>
 
